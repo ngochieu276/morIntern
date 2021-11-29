@@ -1,8 +1,11 @@
 <template>
   <div class="dropdown">
     <div>
-      <div class="title"><h3>Select your city</h3></div>
-      <div class="dropdown-list">  
+      <div class="title" @click="toggleShow">
+        <input type="text" placeholder="Chon Tinh Thanh" />
+      </div>
+      <div v-if="showForm">
+        <div  class="dropdown-list">  
           <div v-for="city of cityList" :key="city">
             <input
               :id="city"
@@ -14,26 +17,36 @@
             <label :for="city">{{ city }}</label>
           </div>
       </div>
+      <div v-if="!confirm">
+        <button @click="toogleConfirm">Confirm</button>
+        <button>Cancel</button>
+      </div>
+      <results v-else :selectedCity="selectedCity" @deselecte-City="deselecteCity"></results>
+      </div>
+      
     </div>
   </div>
-  <results :selectedCity="selectedCity" @deselecte-City="deselecteCity"></results>
+  
 </template>
 
 <script>
-import Results from './Results.vue'
+import Results from "./Results.vue";
+
 export default {
   components: {
-   Results
+    Results,
   },
   name: "Dropdown",
   data() {
     return {
-      selectedCity: []
-    }
+      selectedCity: [],
+      showForm: false,
+      confirm: false,
+    };
   },
   computed: {
     cityList() {
-      return this.$store.state.cityList
+      return this.$store.state.cityList;
     },
   },
   methods: {
@@ -42,9 +55,13 @@ export default {
     },
     deselecteCity(city) {
       this.selectedCity = this.selectedCity.filter((c) => c !== city);
-      
     },
-    
+    toggleShow() {
+      this.showForm = !this.showForm
+    },
+    toogleConfirm() {
+      this.confirm = !this.confirm
+    }
   },
   props: {},
 };
@@ -53,8 +70,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style >
 .dropdown {
-  display: flex;
-  justify-content: space-around;
+  width: 400px;
+  margin: 0 auto;
 }
 .selected-city {
   display: flex;
@@ -70,8 +87,13 @@ export default {
 
 .title {
   background-color: bisque;
-  padding: 1rem;
   border-radius: 12px;
+  height: 15px;
+  margin-bottom: 15px;
+}
+
+.title input {
+  width: 100%;
 }
 
 .title h3 {
@@ -91,29 +113,20 @@ select {
   text-align: left;
   width: 400px;
   height: 30vh;
-  overflow: scroll;
+  overflow-y: scroll;
   box-shadow: 0px 0px 8px rgba(0, 123, 195, 0.32);
   border-radius: 12px;
 }
-.selected-list {
-  margin: 50px auto;
-  width: 30%;
+
+
+.selected-list button {
+  margin: 0 auto;
+  width: 50%;
+  background-color: bisque;
+  border-radius: 5px;
+  padding: 5px 7px;
   box-shadow: 0px 0px 8px rgba(0, 123, 195, 0.32);
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  }
-
-  .selected-list button {
-    margin: 0 auto;
-    width: 50%;
-    background-color: bisque;
-    border-radius: 5px;
-    padding: 5px 7px;
-    box-shadow: 0px 0px 8px rgba(0, 123, 195, 0.32);
-  }
-
+}
 
 select {
   width: 100%;
