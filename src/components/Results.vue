@@ -2,10 +2,9 @@
  <div class="selected-list">
         <div class="selected-cities" v-if="selectedCity.length > 0">
         <div class="selected-city" v-for="city in selectedCity" :key="city">
-          {{ city }} <span @click.prevent="deselecteCity(city)">x</span>
+          {{ city }} <span @click.prevent="deselecteCity(city)">[x]</span>
         </div>
       </div>
-      <button>Confirm</button>
     </div>
 </template>
 

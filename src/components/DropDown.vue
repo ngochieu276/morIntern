@@ -2,7 +2,7 @@
   <div class="dropdown">
     <div>
       <div class="title" @click="toggleShow">
-        <input type="text" placeholder="Chon Tinh Thanh" />
+        <input type="text" placeholder="Chọn tỉnh thành ..." />
       </div>
       <div v-if="showForm">
         <div  class="dropdown-list">  
@@ -17,9 +17,9 @@
             <label :for="city">{{ city }}</label>
           </div>
       </div>
-      <div v-if="!confirm">
-        <button @click="toogleConfirm">Confirm</button>
-        <button>Cancel</button>
+      <div v-if="!confirm" class="control-button">
+        <button @click="toogleConfirm" :disabled="selectedCity.length > 0 ? false : true">Confirm</button>
+        <button @click="toggleShow">Cancel</button>
       </div>
       <results v-else :selectedCity="selectedCity" @deselecte-City="deselecteCity"></results>
       </div>
@@ -55,6 +55,9 @@ export default {
     },
     deselecteCity(city) {
       this.selectedCity = this.selectedCity.filter((c) => c !== city);
+      if (this.selectedCity.length === 0) {
+        this.confirm = false
+      }
     },
     toggleShow() {
       this.showForm = !this.showForm
@@ -72,14 +75,15 @@ export default {
 .dropdown {
   width: 400px;
   margin: 0 auto;
+  box-shadow: 0px 0px 8px rgba(0, 123, 195, 0.32);
 }
 .selected-city {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 5px auto;
-  width: 100px;
-  height: 50px;
+  
+  height: 40px;
   border-radius: 5px;
   margin: 5px;
   background-color: rgba(199, 121, 69, 0.32);
@@ -89,11 +93,15 @@ export default {
   background-color: bisque;
   border-radius: 12px;
   height: 15px;
+  width:100%;
   margin-bottom: 15px;
+  
 }
 
 .title input {
-  width: 100%;
+width: 100%;
+padding:6px 0px;
+border: 1px solid  rgba(199, 121, 69, 0.32);
 }
 
 .title h3 {
@@ -114,7 +122,7 @@ select {
   width: 400px;
   height: 30vh;
   overflow-y: scroll;
-  box-shadow: 0px 0px 8px rgba(0, 123, 195, 0.32);
+  
   border-radius: 12px;
 }
 
@@ -138,5 +146,17 @@ select {
 }
 option {
   min-height: 0;
+}
+
+.control-button {
+  text-align: left;
+  margin-top: 5px;
+}
+
+.control-button button {
+  padding: 4px 6px;
+  border-radius: 5px;
+  background-color: bisque;
+  border: 1px solid rgb(180, 158, 158)
 }
 </style>
