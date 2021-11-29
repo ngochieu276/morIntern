@@ -65,7 +65,7 @@ export default {
   height: 50px;
   border-radius: 5px;
   margin: 5px;
-  background-color: rgba(0, 123, 195, 0.32);
+  background-color: rgba(199, 121, 69, 0.32);
 }
 
 .title {
@@ -84,7 +84,7 @@ select {
 
 .selected-cities {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .dropdown-list {
