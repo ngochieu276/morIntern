@@ -6,13 +6,13 @@
       <div class="dropdown-list">  
           <div v-for="city of cityList" :key="city">
             <input
-              id="city"
+              :id="city"
               :name="city"
               type="checkbox"
               :value="city"
               v-model="selectedCity"
             />
-            <label for="city">{{ city }}</label>
+            <label :for="city">{{ city }}</label>
           </div>
       </div>
     </div>
