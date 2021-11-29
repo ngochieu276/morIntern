@@ -2,7 +2,7 @@
   <h1>Dropdown</h1>
   <div class="dropdown">
     <div>
-       <div class="title"><h3>Select your city</h3></div>
+      <div class="title"><h3>Select your city</h3></div>
       <div class="dropdown-list">  
           <div v-for="city of cityList" :key="city">
             <input
@@ -24,6 +24,7 @@
           {{ city }} <span @click.prevent="deselecteCity(city)">x</span>
         </div>
       </div>
+      <button>Confirm</button>
     </div>
   </div>
 </template>
@@ -122,7 +123,20 @@ select {
 .selected-list {
   box-shadow: 0px 0px 8px rgba(0, 123, 195, 0.32);
   border-radius: 10px;
-}
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  }
+
+  .selected-list button {
+    margin: 0 auto;
+    width: 50%;
+    background-color: bisque;
+    border-radius: 5px;
+    padding: 5px 7px;
+    box-shadow: 0px 0px 8px rgba(0, 123, 195, 0.32);
+  }
+
 
 select {
   width: 100%;
