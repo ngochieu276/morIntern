@@ -1,5 +1,4 @@
 <template>
-  <h1>Dropdown</h1>
   <div class="dropdown">
     <div>
       <div class="title"><h3>Select your city</h3></div>
@@ -16,67 +15,43 @@
           </div>
       </div>
     </div>
-
-    <div class="selected-list">
-      <h2>Your selected city</h2>
-      <div class="selected-cities" v-if="selectedCity.length > 0">
-        <div class="selected-city" v-for="city in selectedCity" :key="city">
-          {{ city }} <span @click.prevent="deselecteCity(city)">x</span>
-        </div>
-      </div>
-      <button>Confirm</button>
-    </div>
   </div>
+  <results :selectedCity="selectedCity" @deselecte-City="deselecteCity"></results>
 </template>
 
 <script>
+import Results from './Results.vue'
 export default {
+  components: {
+   Results
+  },
   name: "Dropdown",
   data() {
     return {
-      cityList: [],
-      selectedCity: [],
-    };
+      selectedCity: []
+    }
   },
   computed: {
-    renderList() {
-      return this.cityList.map((city) => city);
+    cityList() {
+      return this.$store.state.cityList
     },
   },
   methods: {
     setlectCity(e) {
-      this.cityList = this.cityList.filter((c) => c !== e.target.value);
       this.selectedCity.push(e.target.value);
     },
     deselecteCity(city) {
-      console.log("as");
       this.selectedCity = this.selectedCity.filter((c) => c !== city);
-      this.cityList.push(city);
+      
     },
-    loadCitys() {
-      fetch("https://provinces.open-api.vn/api/")
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-        })
-        .then((data) => {
-          const result = [];
-          data.map((city) => result.push(city.name));
-          this.cityList = result;
-          console.log(this.cityList);
-        });
-    },
-  },
-  mounted() {
-    this.loadCitys();
+    
   },
   props: {},
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style >
 .dropdown {
   display: flex;
   justify-content: space-around;
@@ -121,6 +96,8 @@ select {
   border-radius: 12px;
 }
 .selected-list {
+  margin: 50px auto;
+  width: 30%;
   box-shadow: 0px 0px 8px rgba(0, 123, 195, 0.32);
   border-radius: 10px;
   display: flex;

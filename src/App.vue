@@ -3,12 +3,32 @@
 </template>
 
 <script>
-import DropDown from './components/DropDown.vue'
+import DropDown from './components/DropDown.vue';
+
+
 export default {
   name: 'App',
   components: {
-    DropDown
+    DropDown,
+
+   
   }
+  ,methods: {
+    setlectCity(e) {
+      this.cityList = this.cityList.filter((c) => c !== e.target.value);
+      this.selectedCity.push(e.target.value);
+    },
+    deselecteCity(city) {
+      console.log("as");
+      this.selectedCity = this.selectedCity.filter((c) => c !== city);
+      this.cityList.push(city);
+    },
+    
+  },
+  mounted() {
+    this.$store.dispatch('getCities')
+  }
+  
 }
 </script>
 
